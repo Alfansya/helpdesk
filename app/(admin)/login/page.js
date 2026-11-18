@@ -48,7 +48,10 @@ export default function LoginPage() {
   return (
     <div className="login">
       <div className="login-intro">
-        <h1>Helpdesk IT</h1>
+        <div style={{ marginBottom: '1rem' }}>
+          <img src="/logo.png" alt="Logo Santri" style={{ height: '48px', width: 'auto', background: '#fff', borderRadius: '6px', padding: '4px 8px', objectFit: 'contain' }} />
+        </div>
+        <h1>Helpdesk PT. DAS</h1>
         <p>Masuk untuk memantau dan menyelesaikan tiket divisi Anda.</p>
       </div>
       <form className="login-form" onSubmit={submit}>

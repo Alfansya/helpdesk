@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "db:init": "node --env-file=.env.local scripts/init-db.mjs",
-    "db:seed": "node --env-file=.env.local scripts/seed.mjs"
+    "db:seed": "node --env-file=.env.local scripts/seed.mjs",
+    "pwa:icons": "node scripts/generate-pwa-from-logo.mjs"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
