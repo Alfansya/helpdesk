@@ -42,7 +42,7 @@ export default function AppShell({ roles = BOTH, title, actions, children }) {
   return (
     <div className="shell">
       <aside className="side">
-        <div className="brand">Helpdesk IT</div>
+        <div className="brand">Helpdesk PT. DAS</div>
         <nav>
           {items.map((n) => (
             <Link key={n.label} href={n.href} className={active(n.href) ? 'on' : ''}>{n.label}</Link>
