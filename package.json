@@ -1,0 +1,23 @@
+{
+  "name": "helpdesk-it",
+  "version": "2.0.0",
+  "private": true,
+  "engines": { "node": ">=20.9" },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "db:init": "node --env-file=.env.local scripts/init-db.mjs",
+    "db:seed": "node --env-file=.env.local scripts/seed.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "exceljs": "^4.4.0",
+    "jose": "^5.9.6",
+    "next": "^16.2.12",
+    "pdf-lib": "^1.17.1",
+    "pg": "^8.13.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
+}
