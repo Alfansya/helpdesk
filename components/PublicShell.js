@@ -26,8 +26,9 @@ export default function PublicShell({ children }) {
   return (
     <>
       <header className="pubtop">
-        <Link href="/" className="brand" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.65rem' }}>
-          <span>Helpdesk PT. DAS</span>
+        <Link href="/" className="brand" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.65rem', flexShrink: 0 }}>
+          <img src="/logo.png" alt="Logo Santri" style={{ height: '30px', width: 'auto', background: '#fff', borderRadius: '4px', padding: '2px 5px', objectFit: 'contain', flexShrink: 0 }} />
+          <span className="brand-text">Helpdesk PT DAS</span>
         </Link>
         <nav className="pubnav">
           {deferredPrompt && (

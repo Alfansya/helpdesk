@@ -139,12 +139,12 @@ tbody tr:hover { background: #fafcfc; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 
 /* ===== Halaman publik (form tiket & cek status) ===== */
-.pubtop { background: var(--side); display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .85rem 2rem; flex-wrap: wrap; }
-.pubtop .brand { padding: 0; color: #fff; text-decoration: none; }
-.pubnav { display: flex; align-items: center; gap: .75rem; }
-.pubnav .plink { color: #b9cccc; text-decoration: none; padding: .4rem .5rem; }
+.pubtop { background: var(--side); display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .85rem 2rem; flex-wrap: nowrap; }
+.pubtop .brand { padding: 0; color: #fff; text-decoration: none; flex-shrink: 0; }
+.pubnav { display: flex; align-items: center; gap: .75rem; flex-shrink: 0; }
+.pubnav .plink { color: #b9cccc; text-decoration: none; padding: .4rem .5rem; white-space: nowrap; }
 .pubnav .plink:hover { color: #fff; }
-.pubnav .btn.ghost-light { width: auto; }
+.pubnav .btn.ghost-light { width: auto; white-space: nowrap; }
 .pub { max-width: 780px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 .pub-head { margin-bottom: 1.25rem; }
 .pub-head p { color: var(--ink-2); margin: .4rem 0 0; }
@@ -154,4 +154,9 @@ tbody tr:hover { background: #fafcfc; }
 .kode-box p { margin: 0; }
 .kode { font-size: 2rem; font-weight: 600; letter-spacing: .06em; font-variant-numeric: tabular-nums; padding: .9rem 1.1rem; background: #f7f9f9; border: 1px dashed #b4c0c2; border-radius: 6px; width: fit-content; max-width: 100%; overflow-wrap: anywhere; }
 .login-form .small { text-align: center; }
-@media (max-width: 900px) { .pubtop { padding: .75rem 1rem; } }
+@media (max-width: 600px) {
+  .pubtop { padding: .65rem .85rem; gap: .5rem; }
+  .brand-text { display: none; }
+  .pubnav .plink { font-size: .82rem; padding: .35rem .25rem; }
+  .pubnav .btn.ghost-light { padding: .4rem .65rem; font-size: .85rem; }
+}
