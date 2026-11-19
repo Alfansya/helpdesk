@@ -79,7 +79,7 @@ export default function Users() {
                 value={form.password}
                 onChange={set('password')}
                 required={!form.id}
-                minLength={form.password ? 10 : undefined}
+                minLength={form.password ? 7 : undefined}
                 maxLength={128}
                 autoComplete="new-password"
                 style={{ width: '100%', paddingRight: '2.5rem' }}
