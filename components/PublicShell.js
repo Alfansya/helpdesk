@@ -33,7 +33,7 @@ export default function PublicShell({ children }) {
         <nav className="pubnav">
           {deferredPrompt && (
             <button type="button" onClick={installApp} className="btn ghost-light" title="Pasang aplikasi di perangkat Anda">
-              📲 Install App
+              Install App
             </button>
           )}
           <Link href="/cek-tiket" className="plink">Cek status tiket</Link>
