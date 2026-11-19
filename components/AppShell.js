@@ -92,8 +92,8 @@ export default function AppShell({ roles = BOTH, title, actions, children }) {
 
       <header className="mbar">
         <div className="mbar-brand">
-          <span>Helpdesk</span>
-          <small>{user.role === 'superadmin' ? 'Superadmin · semua divisi' : `Admin · ${user.divisi}`}</small>
+          <span>Helpdesk PT. DAS</span>
+          <small>{user.nama} - {user.role === 'superadmin' ? 'Superadmin' : 'Admin'}</small>
         </div>
         <button type="button" className="mbar-out" onClick={logout} aria-label="Keluar dari akun">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

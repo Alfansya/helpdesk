@@ -9,7 +9,10 @@ export const dynamic = 'force-dynamic';
 export const GET = api(null, async ({ req }) => {
   await rateLimit(`track:${clientIp(req)}`, 30, 600); // cegah tebak-tebakan kode
   const kode = (new URL(req.url).searchParams.get('kode') || '').trim().toUpperCase();
-  if (!KODE_RE.test(kode)) throw new HttpError(400, 'Format kode tiket tidak valid. Contoh: TKT-7K3QX92M');
+  // Cek panjang dulu agar regex tidak pernah menerima input panjang.
+  if (kode.length !== 12 || !KODE_RE.test(kode)) {
+    throw new HttpError(400, 'Format kode tiket tidak valid. Contoh: TKT-7K3QX92M');
+  }
 
   const { rows } = await query(
     `SELECT id, kode_ticket, alamat, divisi, urgensi, deskripsi, status, catatan_admin, created_at, updated_at

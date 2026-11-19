@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import bcrypt from 'bcryptjs';
 import pg from 'pg';
+import { isEmail } from '../lib/server/email.js';
 
 const DIVISI = ['Operasional', 'HC-GA', 'Marketing', 'Finance'];
 const file = new URL('../seed-accounts.json', import.meta.url);
@@ -18,7 +19,7 @@ const accounts = JSON.parse(fs.readFileSync(file, 'utf8'));
 const emails = new Set();
 for (const a of accounts) {
   const email = String(a.email || '').trim().toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error(`Email tidak valid: ${a.email}`);
+  if (!isEmail(email)) throw new Error(`Email tidak valid: ${a.email}`);
   if (emails.has(email)) throw new Error(`Email dobel: ${email}`);
   emails.add(email);
   if (!a.nama) throw new Error(`Nama kosong untuk ${email}`);
