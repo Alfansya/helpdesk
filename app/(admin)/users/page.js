@@ -125,17 +125,17 @@ export default function Users() {
       {list && <p className="muted small">{admins} admin · {list.length - admins} superadmin</p>}
       <div className="panel flush">
         <div className="tablewrap">
-          <table>
+          <table className="table-cards table-users">
             <thead><tr><th>Nama</th><th>Email</th><th>Role</th><th>Divisi</th><th>Dibuat</th><th></th></tr></thead>
             <tbody>
               {!list && <tr><td colSpan={6} className="empty">Memuat data…</td></tr>}
               {list?.map((u) => (
                 <tr key={u.id}>
-                  <td>{u.nama}</td><td>{u.email}</td>
-                  <td><span className={`badge ${u.role === 'superadmin' ? 'role-admin' : 'ug-low'}`}>{u.role === 'superadmin' ? 'Superadmin' : 'Admin'}</span></td>
-                  <td>{u.divisi || 'Semua'}</td>
-                  <td className="nowrap">{fmtDate(u.created_at)}</td>
-                  <td className="right nowrap">
+                  <td data-label="Nama">{u.nama}</td><td data-label="Email">{u.email}</td>
+                  <td data-label="Role"><span className={`badge ${u.role === 'superadmin' ? 'role-admin' : 'ug-low'}`}>{u.role === 'superadmin' ? 'Superadmin' : 'Admin'}</span></td>
+                  <td data-label="Divisi">{u.divisi || 'Semua'}</td>
+                  <td data-label="Dibuat" className="nowrap">{fmtDate(u.created_at)}</td>
+                  <td className="right nowrap td-actions">
                     <button className="btn sm" onClick={() => { setFormError(''); setForm({ ...u, password: '' }); }}>Ubah</button>{' '}
                     <button className="btn sm danger" disabled={u.id === me?.id} onClick={() => remove(u)}>Hapus</button>
                   </td>

@@ -6,9 +6,9 @@ export default function manifest() {
     start_url: '/',
     id: '/',
     display: 'standalone',
-    orientation: 'portrait-primary',
+    orientation: 'any',
     background_color: '#f1f4f4',
-    theme_color: '#14766f',
+    theme_color: '#14262b',
     scope: '/',
     lang: 'id',
     icons: [

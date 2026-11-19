@@ -5,10 +5,13 @@ import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 const font = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '500', '600'], display: 'swap' });
 
 export const viewport = {
-  themeColor: '#14766f',
+  themeColor: '#14262b',
+  colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  viewportFit: 'cover',
+  interactiveWidget: 'resizes-content',
 };
 
 export const metadata = {
@@ -17,10 +20,11 @@ export const metadata = {
   applicationName: 'Helpdesk PT. DAS',
   manifest: '/manifest.json',
   robots: { index: false, follow: false },
+  formatDetection: { telephone: false },
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
-    title: 'Helpdesk PT. DAS',
+    statusBarStyle: 'black-translucent',
+    title: 'Helpdesk DAS',
   },
   icons: {
     icon: [

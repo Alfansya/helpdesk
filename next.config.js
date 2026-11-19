@@ -34,6 +34,7 @@ const securityHeaders = [
 module.exports = {
   reactStrictMode: true,
   poweredByHeader: false,
+  devIndicators: false,
   serverExternalPackages: ['exceljs'],
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];

@@ -1,13 +1,13 @@
 {
   "name": "Helpdesk PT. DAS",
-  "short_name": "Helpdesk PT. DAS",
+  "short_name": "Helpdesk DAS",
   "description": "Sistem Pelaporan Gangguan IT & Helpdesk Ticketing PT. DAS",
   "start_url": "/",
   "id": "/",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "background_color": "#f1f4f4",
-  "theme_color": "#14766f",
+  "theme_color": "#14262b",
   "scope": "/",
   "lang": "id",
   "icons": [

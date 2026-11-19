@@ -60,7 +60,7 @@ export default function Tickets() {
       {error && <div className="alert err">{error}</div>}
       <div className="panel flush">
         <div className="tablewrap">
-          <table>
+          <table className="table-cards">
             <thead>
               <tr>
                 <th>Kode</th><th>Alamat</th>{isSuper && <th>Divisi</th>}
@@ -76,11 +76,11 @@ export default function Tickets() {
               )}
               {res?.data.map((t) => (
                 <tr key={t.id}>
-                  <td><Link className="code" href={`/tickets/${t.id}`}>{t.kode_ticket}</Link></td>
-                  <td>{t.alamat}</td>{isSuper && <td>{t.divisi}</td>}
-                  <td><UrgencyBadge urgensi={t.urgensi} /></td>
-                  <td><StatusBadge status={t.status} /></td>
-                  <td className="nowrap">{fmtDate(t.created_at)}</td>
+                  <td data-label="Kode"><Link className="code" href={`/tickets/${t.id}`}>{t.kode_ticket}</Link></td>
+                  <td data-label="Alamat">{t.alamat}</td>{isSuper && <td data-label="Divisi">{t.divisi}</td>}
+                  <td data-label="Urgensi"><UrgencyBadge urgensi={t.urgensi} /></td>
+                  <td data-label="Status"><StatusBadge status={t.status} /></td>
+                  <td data-label="Dibuat" className="nowrap">{fmtDate(t.created_at)}</td>
                 </tr>
               ))}
             </tbody>
