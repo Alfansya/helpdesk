@@ -85,7 +85,7 @@ export default function AppShell({ roles = BOTH, title, actions, children }) {
         </nav>
         <div className="me">
           <div className="me-name">{user.nama}</div>
-          <div className="me-role">{user.role === 'superadmin' ? 'Superadmin · semua divisi' : `Admin · ${user.divisi}`}</div>
+          <div className="me-role">{user.role === 'superadmin' ? 'Superadmin' : `Admin · ${user.divisi}`}</div>
           <button className="btn ghost-light" onClick={logout}>Keluar</button>
         </div>
       </aside>

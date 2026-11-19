@@ -29,7 +29,7 @@ export default function Dashboard() {
 
   return (
     <AppShell
-      title={isSuper ? 'Dashboard · semua divisi' : `Dashboard · ${user?.divisi || ''}`}
+      title={isSuper ? 'Dashboard' : `Dashboard · ${user?.divisi || ''}`}
       actions={<Link className="btn" href="/tickets">Lihat daftar tiket</Link>}
     >
       {error && <div className="alert err">{error}</div>}

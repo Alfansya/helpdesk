@@ -60,7 +60,7 @@ export default function Users() {
             <label>Role
               <select value={form.role} onChange={set('role')}>
                 <option value="admin">Admin (satu divisi)</option>
-                <option value="superadmin">Superadmin (semua divisi)</option>
+                <option value="superadmin">Superadmin</option>
               </select>
             </label>
             {form.role === 'admin' && (
@@ -133,7 +133,7 @@ export default function Users() {
                 <tr key={u.id}>
                   <td data-label="Nama">{u.nama}</td><td data-label="Email">{u.email}</td>
                   <td data-label="Role"><span className={`badge ${u.role === 'superadmin' ? 'role-admin' : 'ug-low'}`}>{u.role === 'superadmin' ? 'Superadmin' : 'Admin'}</span></td>
-                  <td data-label="Divisi">{u.divisi || 'Semua'}</td>
+                  <td data-label="Divisi">{u.divisi || '-'}</td>
                   <td data-label="Dibuat" className="nowrap">{fmtDate(u.created_at)}</td>
                   <td className="right nowrap td-actions">
                     <button className="btn sm" onClick={() => { setFormError(''); setForm({ ...u, password: '' }); }}>Ubah</button>{' '}
