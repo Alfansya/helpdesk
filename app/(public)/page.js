@@ -39,7 +39,7 @@ export default function BuatTiket() {
           <div className="kode">{kode}</div>
           <div className="row">
             <button className="btn" onClick={copy}>{copied ? 'Tersalin' : 'Salin kode'}</button>
-            <Link className="btn primary" href={`/cek-tiket?kode=${kode}`}>Lihat status tiket</Link>
+            <Link className="btn primary" href={`/cek-tiket?kode=${encodeURIComponent(kode)}`}>Lihat status tiket</Link>
             <button className="btn" onClick={() => setKode('')}>Buat tiket lain</button>
           </div>
         </section>

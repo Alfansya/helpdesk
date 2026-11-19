@@ -33,7 +33,7 @@ export default function CekTiket() {
         <p>Masukkan kode tiket yang Anda terima setelah mengirim laporan.</p>
       </div>
       <form className="filters" onSubmit={submit}>
-        <input value={kode} onChange={(e) => setKode(e.target.value)} placeholder="TKT-XXXXXXXX"
+        <input value={kode} onChange={(e) => setKode(e.target.value)} placeholder="TKT01-191126"
           aria-label="Kode tiket" maxLength={20} required style={{ flex: '1 1 240px', width: 'auto' }} />
         <button className="btn primary" disabled={busy}>{busy ? 'Mencari…' : 'Cek status'}</button>
       </form>

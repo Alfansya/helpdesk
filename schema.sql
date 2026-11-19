@@ -18,7 +18,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS users_email_key ON users (lower(email));
 
 CREATE TABLE IF NOT EXISTS tickets (
   id             SERIAL PRIMARY KEY,
-  kode_ticket    VARCHAR(20) NOT NULL UNIQUE,   -- acak, mis. TKT-7K3QX92M (tidak bisa ditebak)
+  kode_ticket    VARCHAR(20) NOT NULL UNIQUE,   -- mis. TKT01-191126 (urut per tanggal, WIB)
   alamat         VARCHAR(30) NOT NULL
                  CHECK (alamat IN ('Kantor Pusat','Soponyono','Menur','Jambangan','Sambikerep')),
   divisi         VARCHAR(30) NOT NULL

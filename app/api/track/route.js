@@ -10,8 +10,8 @@ export const GET = api(null, async ({ req }) => {
   await rateLimit(`track:${clientIp(req)}`, 30, 600); // cegah tebak-tebakan kode
   const kode = (new URL(req.url).searchParams.get('kode') || '').trim().toUpperCase();
   // Cek panjang dulu agar regex tidak pernah menerima input panjang.
-  if (kode.length !== 12 || !KODE_RE.test(kode)) {
-    throw new HttpError(400, 'Format kode tiket tidak valid. Contoh: TKT-7K3QX92M');
+  if (kode.length < 12 || kode.length > 20 || !KODE_RE.test(kode)) {
+    throw new HttpError(400, 'Format kode tiket tidak valid. Contoh: TKT01-191126');
   }
 
   const { rows } = await query(

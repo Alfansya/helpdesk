@@ -30,7 +30,7 @@ export default function Users() {
       const body = { nama: form.nama, email: form.email, password: form.password, role: form.role, divisi: form.role === 'admin' ? form.divisi : null };
       if (form.id) await api.put(`/users/${form.id}`, body);
       else await api.post('/users', body);
-      setForm(null); load();
+      setForm(null); setShowPassword(false); load();
     } catch (err) { setFormError(err.message); }
     finally { setBusy(false); }
   };
@@ -45,7 +45,7 @@ export default function Users() {
 
   return (
     <AppShell roles={['superadmin']} title="Manajemen admin"
-      actions={<button className="btn primary" onClick={() => { setFormError(''); setForm(EMPTY); }}>Tambah akun</button>}>
+      actions={<button className="btn primary" onClick={() => { setFormError(''); setShowPassword(false); setForm(EMPTY); }}>Tambah akun</button>}>
       {error && <div className="alert err" role="alert">{error}</div>}
 
       {form && (
@@ -73,7 +73,7 @@ export default function Users() {
           </div>
           <label>
             {form.id ? 'Password baru (kosongkan jika tidak diubah)' : 'Password (minimal 10 karakter)'}
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+            <div className="pass-wrap">
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={form.password}
@@ -82,33 +82,25 @@ export default function Users() {
                 minLength={form.password ? 6 : undefined}
                 maxLength={128}
                 autoComplete="new-password"
-                style={{ width: '100%', paddingRight: '2.5rem' }}
               />
               <button
                 type="button"
+                className="pass-toggle"
                 onClick={() => setShowPassword((prev) => !prev)}
-                aria-label={showPassword ? 'Sembunyikan password' : 'Lihat password'}
-                style={{
-                  position: 'absolute',
-                  right: '0.6rem',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '0.25rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  color: 'inherit',
-                  opacity: 0.7,
-                }}
+                aria-label={showPassword ? 'Sembunyikan password' : 'Tampilkan password'}
+                aria-pressed={showPassword}
+                title={showPassword ? 'Sembunyikan password' : 'Tampilkan password'}
               >
                 {showPassword ? (
-                  <svg xmlns="http://w3.org" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                    <line x1="1" y1="1" x2="23" y2="23" />
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="m3 3 18 18" />
+                    <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8" />
+                    <path d="M9.9 5.2A10.4 10.4 0 0 1 12 5c4.5 0 8.3 3.1 9.9 7.2a10.8 10.8 0 0 1-3 4.1" />
+                    <path d="M6.6 6.6a10.6 10.6 0 0 0-4.5 5.1 1 1 0 0 0 0 .6C3.7 16.4 7.5 19.5 12 19.5c1.1 0 2.1-.2 3.1-.5" />
                   </svg>
                 ) : (
-                  <svg xmlns="http://w3.org" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M2.1 12.3a1 1 0 0 1 0-.6C3.7 7.6 7.5 4.5 12 4.5s8.3 3.1 9.9 7.2a1 1 0 0 1 0 .6C20.3 16.4 16.5 19.5 12 19.5s-8.3-3.1-9.9-7.2Z" />
                     <circle cx="12" cy="12" r="3" />
                   </svg>
                 )}
@@ -117,7 +109,7 @@ export default function Users() {
           </label>
           <div className="row">
             <button className="btn primary" disabled={busy}>{busy ? 'Menyimpan…' : 'Simpan'}</button>
-            <button type="button" className="btn" onClick={() => setForm(null)}>Batal</button>
+            <button type="button" className="btn" onClick={() => { setShowPassword(false); setForm(null); }}>Batal</button>
           </div>
         </form>
       )}
@@ -136,7 +128,7 @@ export default function Users() {
                   <td data-label="Divisi">{u.divisi || '-'}</td>
                   <td data-label="Dibuat" className="nowrap">{fmtDate(u.created_at)}</td>
                   <td className="right nowrap td-actions">
-                    <button className="btn sm" onClick={() => { setFormError(''); setForm({ ...u, password: '' }); }}>Ubah</button>{' '}
+                    <button className="btn sm" onClick={() => { setFormError(''); setShowPassword(false); setForm({ ...u, password: '' }); }}>Ubah</button>{' '}
                     <button className="btn sm danger" disabled={u.id === me?.id} onClick={() => remove(u)}>Hapus</button>
                   </td>
                 </tr>
