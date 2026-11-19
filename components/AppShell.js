@@ -43,7 +43,6 @@ export default function AppShell({ roles = BOTH, title, actions, children }) {
     <div className="shell">
       <aside className="side">
         <div className="brand" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <img src="/logo.png" alt="Logo Santri" style={{ height: '30px', width: 'auto', background: '#fff', borderRadius: '4px', padding: '2px 5px', objectFit: 'contain' }} />
           <span>Helpdesk PT. DAS</span>
         </div>
         <nav>

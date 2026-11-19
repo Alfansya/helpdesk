@@ -27,7 +27,6 @@ export default function PublicShell({ children }) {
     <>
       <header className="pubtop">
         <Link href="/" className="brand" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.65rem' }}>
-          <img src="/logo.png" alt="Logo Santri" style={{ height: '32px', width: 'auto', background: '#fff', borderRadius: '4px', padding: '2px 5px', objectFit: 'contain' }} />
           <span>Helpdesk PT. DAS</span>
         </Link>
         <nav className="pubnav">
