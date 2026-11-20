@@ -110,12 +110,19 @@ export default function BuatTiket() {
               siteKey={SITE_KEY}
               onVerify={(token) => { setCaptchaToken(token); setError(''); }}
               onExpire={() => setCaptchaToken('')}
-              onError={() => {
+              onError={(code) => {
                 setCaptchaToken('');
-                setError('Verifikasi keamanan gagal dimuat. Muat ulang halaman lalu coba lagi.');
+                setError(`Verifikasi keamanan gagal dimuat${code ? ` (kode: ${code})` : ''}. Coba lagi atau muat ulang halaman.`);
               }}
             />
             <p className="muted small">Verifikasi keamanan untuk mencegah pengiriman otomatis.</p>
+            <button
+              type="button"
+              className="btn sm"
+              onClick={() => { setError(''); captchaRef.current?.reset(); }}
+            >
+              Coba lagi verifikasi
+            </button>
           </div>
         )}
         <p className="muted small">Status awal tiket adalah “Belum Diproses”. Kode tiket dibuat otomatis setelah dikirim.</p>

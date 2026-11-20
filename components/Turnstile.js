@@ -24,9 +24,11 @@ const Turnstile = forwardRef(function Turnstile({ siteKey, onVerify, onExpire, o
         action: 'ticket',
         theme: 'light',
         size: 'flexible',
+        retry: 'auto',
+        'retry-interval': 8000,
         callback: (token) => callbacks.current.onVerify?.(token),
         'expired-callback': () => callbacks.current.onExpire?.(),
-        'error-callback': () => callbacks.current.onError?.(),
+        'error-callback': (code) => callbacks.current.onError?.(code),
       });
     };
 
@@ -40,7 +42,7 @@ const Turnstile = forwardRef(function Turnstile({ siteKey, onVerify, onExpire, o
         script.async = true;
         script.defer = true;
         script.dataset.turnstile = 'true';
-        script.addEventListener('error', () => callbacks.current.onError?.());
+        script.addEventListener('error', () => callbacks.current.onError?.('script-load'));
         document.head.appendChild(script);
       }
       script.addEventListener('load', render);
