@@ -21,3 +21,13 @@ export const GET = api(['admin', 'superadmin'], async ({ session, params }) => {
      WHERE l.ticket_id = $1 ORDER BY l.created_at ASC, l.id ASC`, [id]);
   return json({ ticket: t, logs: logs.rows });
 });
+
+// Hanya superadmin. Riwayat penanganan ikut terhapus lewat ON DELETE CASCADE.
+export const DELETE = api(['superadmin'], async ({ params }) => {
+  const id = positiveInt(params.id);
+  if (!id) throw new HttpError(404, 'Tiket tidak ditemukan.');
+  const { rows } = await query(
+    'DELETE FROM tickets WHERE id = $1 RETURNING id, kode_ticket', [id]);
+  if (!rows[0]) throw new HttpError(404, 'Tiket tidak ditemukan.');
+  return json({ ok: true, kode_ticket: rows[0].kode_ticket });
+});

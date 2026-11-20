@@ -2,8 +2,13 @@ import { api, json, readJson, clientIp, HttpError } from '@/lib/server/http';
 import { scopeDivisi } from '@/lib/server/auth';
 import { query, tx } from '@/lib/server/db';
 import { rateLimit } from '@/lib/server/ratelimit';
+import { verifyCaptcha } from '@/lib/server/captcha';
 import { text, oneOf, likeEscape } from '@/lib/server/validate';
 import { ALAMAT, DIVISI, URGENSI, STATUS } from '@/lib/constants';
+
+// Batas pembuatan tiket per alamat IP.
+const TICKET_LIMIT = 5;
+const TICKET_WINDOW_SEC = 10 * 60;
 
 export const dynamic = 'force-dynamic';
 
@@ -28,12 +33,19 @@ export const POST = api(null, async ({ req }) => {
   // Nomor 00 tidak pernah dipakai tiket asli, jadi aman sebagai kode palsu.
   if (body.website) return json({ kode: `TKT00-${tanggalKode()}` }, 201);
 
-  await rateLimit(`ticket:${clientIp(req)}`, 6, 600); // 6 tiket / 10 menit / IP
-
   const alamat = oneOf(body.alamat, ALAMAT, 'Alamat');
   const divisi = oneOf(body.divisi, DIVISI, 'Divisi');
   const urgensi = oneOf(body.urgensi, URGENSI, 'Urgensi');
   const deskripsi = text(body.deskripsi, { label: 'Deskripsi keluhan', max: 2000 });
+  const captchaToken = text(body.captchaToken, {
+    label: 'CAPTCHA', max: 2048, optional: true,
+  });
+
+  const ip = clientIp(req);
+  await verifyCaptcha(captchaToken, ip);
+  // Dihitung setelah validasi + CAPTCHA, jadi kuota 5 tiket hanya terpakai
+  // untuk pengiriman yang benar-benar sah.
+  await rateLimit(`ticket:${ip}`, TICKET_LIMIT, TICKET_WINDOW_SEC);
 
   const kode = await tx(async (c) => {
     const tanggal = tanggalKode();

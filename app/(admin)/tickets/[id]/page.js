@@ -1,18 +1,23 @@
 'use client';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import AppShell from '@/components/AppShell';
 import { StatusBadge, UrgencyBadge } from '@/components/Badges';
+import { useAuth } from '@/components/AuthProvider';
 import { api } from '@/lib/api';
 import { STATUS, fmtDate } from '@/lib/constants';
 
 export default function TicketDetail() {
   const { id } = useParams();
+  const router = useRouter();
+  const { user } = useAuth();
+  const isSuper = user?.role === 'superadmin';
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const [catatan, setCatatan] = useState('');
   const [busy, setBusy] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [msg, setMsg] = useState('');
 
   const load = useCallback(() => {
@@ -33,10 +38,28 @@ export default function TicketDetail() {
     finally { setBusy(false); }
   };
 
+  const remove = async () => {
+    if (!window.confirm(`Hapus tiket ${t.kode_ticket}?\n\nRiwayat penanganan ikut terhapus dan tidak dapat dikembalikan.`)) return;
+    setError(''); setMsg(''); setDeleting(true);
+    try {
+      await api.del(`/tickets/${id}`);
+      router.replace('/tickets');
+    } catch (e) { setError(e.message); setDeleting(false); }
+  };
+
   return (
     <AppShell
       title={t ? t.kode_ticket : 'Detail tiket'}
-      actions={<Link className="btn" href="/tickets">Kembali ke daftar</Link>}
+      actions={
+        <>
+          <Link className="btn" href="/tickets">Kembali ke daftar</Link>
+          {isSuper && t && (
+            <button className="btn danger" onClick={remove} disabled={deleting} style={{ marginLeft: '.5rem' }}>
+              {deleting ? 'Menghapus…' : 'Hapus tiket'}
+            </button>
+          )}
+        </>
+      }
     >
       {error && <div className="alert err" role="alert">{error}</div>}
       {msg && <div className="alert ok" role="status">{msg}</div>}

@@ -251,6 +251,9 @@ tbody tr:hover { background: #fafcfc; }
 .pub-head p { color: var(--ink-2); margin: .4rem 0 0; }
 .pub .detail { grid-template-columns: 1fr; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.captcha { margin: .25rem 0 1rem; }
+.captcha .turnstile { min-height: 65px; }
+.captcha .small { margin: .4rem 0 0; }
 .kode-box { display: flex; flex-direction: column; gap: 1rem; }
 .kode-box p { margin: 0; }
 .kode { font-size: 2rem; font-weight: 600; letter-spacing: .06em; font-variant-numeric: tabular-nums; padding: .9rem 1.1rem; background: #f7f9f9; border: 1px dashed #b4c0c2; border-radius: 6px; width: fit-content; max-width: 100%; overflow-wrap: anywhere; }

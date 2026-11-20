@@ -17,6 +17,8 @@ export default function Tickets() {
   const [page, setPage] = useState(1);
   const [res, setRes] = useState(null);
   const [error, setError] = useState('');
+  const [tick, setTick] = useState(0);
+  const [busyId, setBusyId] = useState(null);
 
   useEffect(() => {
     const t = setTimeout(() => { setFilters((f) => ({ ...f, q })); setPage(1); }, 350);
@@ -28,13 +30,25 @@ export default function Tickets() {
     Object.entries(filters).forEach(([k, v]) => v && p.set(k, v));
     setError('');
     api.get(`/tickets?${p}`).then(setRes).catch((e) => setError(e.message));
-  }, [filters, page]);
+  }, [filters, page, tick]);
 
   const setF = (k) => (e) => { setFilters({ ...filters, [k]: e.target.value }); setPage(1); };
   const reset = () => { setQ(''); setFilters({ q: '', status: '', divisi: '', urgensi: '' }); setPage(1); };
   const hasFilter = q || filters.status || filters.divisi || filters.urgensi;
   const pages = res ? Math.max(Math.ceil(res.total / LIMIT), 1) : 1;
-  const cols = isSuper ? 6 : 5;
+  const cols = isSuper ? 7 : 5;
+
+  const remove = async (t) => {
+    if (!window.confirm(`Hapus tiket ${t.kode_ticket}?\n\nRiwayat penanganan ikut terhapus dan tidak dapat dikembalikan.`)) return;
+    setError(''); setBusyId(t.id);
+    try {
+      await api.del(`/tickets/${t.id}`);
+      // Baris terakhir di halaman ini terhapus -> mundur satu halaman.
+      if (res?.data.length === 1 && page > 1) setPage(page - 1);
+      else setTick((n) => n + 1);
+    } catch (e) { setError(e.message); }
+    finally { setBusyId(null); }
+  };
 
   if (!user) return <div className="boot">Memuat…</div>;
 
@@ -64,7 +78,7 @@ export default function Tickets() {
             <thead>
               <tr>
                 <th>Kode</th><th>Alamat</th>{isSuper && <th>Divisi</th>}
-                <th>Urgensi</th><th>Status</th><th>Dibuat</th>
+                <th>Urgensi</th><th>Status</th><th>Dibuat</th>{isSuper && <th></th>}
               </tr>
             </thead>
             <tbody>
@@ -81,6 +95,13 @@ export default function Tickets() {
                   <td data-label="Urgensi"><UrgencyBadge urgensi={t.urgensi} /></td>
                   <td data-label="Status"><StatusBadge status={t.status} /></td>
                   <td data-label="Dibuat" className="nowrap">{fmtDate(t.created_at)}</td>
+                  {isSuper && (
+                    <td className="right nowrap td-actions">
+                      <button className="btn sm danger" disabled={busyId === t.id} onClick={() => remove(t)}>
+                        {busyId === t.id ? 'Menghapus…' : 'Hapus'}
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
