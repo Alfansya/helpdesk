@@ -5,7 +5,7 @@ import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 const font = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '500', '600'], display: 'swap' });
 
 export const viewport = {
-  themeColor: '#14262b',
+  themeColor: '#214c38',
   colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
